@@ -1,5 +1,5 @@
 -- ============================================================
---  setup.sql
+--  LibraryQuiet Monitoring System (LQMS) — setup.sql
 --  Run once in phpMyAdmin or via CLI to initialise the database.
 --
 --  Compatible with:  MySQL 5.7+ / MariaDB 10.3+

@@ -1,5 +1,5 @@
 // ============================================================
-//  app.js
+// LQMS — app.js
 // Core client-side logic: BASE_URL, clock, sidebar, toasts,
 // alert badge polling, zone level refresh, modal helpers.
 // ============================================================

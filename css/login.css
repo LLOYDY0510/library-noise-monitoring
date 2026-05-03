@@ -1,5 +1,5 @@
 /* ============================================================
-   login.css
+   LQMS — login.css
    Auth page styles. Light/neutral theme consistent with main.css.
    Uses the same token names as main.css — no separate dark tokens.
    ============================================================ */
@@ -7,7 +7,7 @@
 /* Page shell */
 .auth-page {
     min-height: 100vh;
-    background: var(--gray-50);
+    background: #0f1117;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,43 +16,30 @@
     overflow: hidden;
 }
 
-/* Subtle dot-grid background texture */
-.auth-page::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-        radial-gradient(circle, var(--gray-300) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: .45;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Soft colour blobs */
+/* Soft colour blobs — toned down for dark bg */
 .auth-blob {
     position: fixed;
     border-radius: 50%;
-    filter: blur(90px);
+    filter: blur(110px);
     pointer-events: none;
     z-index: 0;
-    animation: blobDrift 10s ease-in-out infinite;
+    animation: blobDrift 12s ease-in-out infinite;
 }
 .auth-blob-1 {
-    width: 380px; height: 380px;
-    background: rgba(37, 99, 235, .08);
-    top: -120px; left: -80px;
+    width: 420px; height: 420px;
+    background: rgba(37, 99, 235, .12);
+    top: -140px; left: -100px;
 }
 .auth-blob-2 {
-    width: 260px; height: 260px;
-    background: rgba(5, 150, 105, .07);
-    bottom: -80px; right: -60px;
-    animation-delay: -5s;
+    width: 300px; height: 300px;
+    background: rgba(16, 185, 129, .08);
+    bottom: -100px; right: -80px;
+    animation-delay: -6s;
 }
 
 @keyframes blobDrift {
     0%, 100% { transform: translateY(0) scale(1); }
-    50%       { transform: translateY(-18px) scale(1.04); }
+    50%       { transform: translateY(-20px) scale(1.05); }
 }
 
 /* ── Auth card ────────────────────────────────────────────── */
@@ -64,14 +51,14 @@
 }
 
 .auth-card {
-    background: #fff;
-    border: 1px solid var(--gray-200);
+    background: #1a1f2e;
+    border: 1px solid #273044;
     border-radius: var(--radius-xl);
     padding: 36px 36px 28px;
     box-shadow:
-        0 0 0 1px rgba(37, 99, 235, .04),
-        0 20px 60px rgba(0, 0, 0, .08),
-        0 4px 16px rgba(37, 99, 235, .05);
+        0 0 0 1px rgba(37, 99, 235, .08),
+        0 20px 60px rgba(0, 0, 0, .5),
+        0 4px 16px rgba(0, 0, 0, .3);
     animation: cardIn .4s cubic-bezier(.22, .68, 0, 1.2) both;
 }
 
@@ -103,14 +90,14 @@
 .auth-brand-name {
     font-size: 18px;
     font-weight: 800;
-    color: var(--gray-900);
+    color: #f1f5f9;
     letter-spacing: -.3px;
     line-height: 1.1;
 }
 
 .auth-brand-sub {
     font-size: 11px;
-    color: var(--gray-400);
+    color: #64748b;
     margin-top: 2px;
     letter-spacing: .2px;
 }
@@ -149,8 +136,8 @@
 .auth-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: var(--gray-100);
-    border: 1px solid var(--gray-200);
+    background: #0f1117;
+    border: 1px solid #273044;
     border-radius: var(--radius);
     padding: 4px;
     margin-bottom: 24px;
@@ -165,18 +152,18 @@
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 600;
-    color: var(--gray-400);
+    color: #64748b;
     cursor: pointer;
     transition: background .15s, color .15s, box-shadow .15s;
 }
 
 .auth-tab-btn.active {
-    background: #fff;
-    color: var(--blue-600);
-    box-shadow: var(--shadow-sm);
+    background: #273044;
+    color: #60a5fa;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
 }
 
-.auth-tab-btn:not(.active):hover { color: var(--gray-700); }
+.auth-tab-btn:not(.active):hover { color: #cbd5e1; }
 
 /* ── Tab panels ───────────────────────────────────────────── */
 .auth-panel { display: none; }
@@ -185,14 +172,14 @@
 .auth-panel-title {
     font-size: 19px;
     font-weight: 700;
-    color: var(--gray-900);
+    color: #f1f5f9;
     letter-spacing: -.3px;
     margin-bottom: 4px;
 }
 
 .auth-panel-sub {
     font-size: 12.5px;
-    color: var(--gray-400);
+    color: #64748b;
     margin-bottom: 18px;
     line-height: 1.5;
 }
@@ -202,13 +189,13 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: var(--safe-bg);
-    border: 1px solid rgba(5, 150, 105, .20);
+    background: rgba(16,185,129,.12);
+    border: 1px solid rgba(16,185,129,.25);
     border-radius: var(--radius-sm);
     padding: 5px 10px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--safe);
+    color: #34d399;
     margin-bottom: 16px;
 }
 
@@ -248,13 +235,24 @@
     display: block;
     font-size: 11px;
     font-weight: 700;
-    color: var(--gray-600);
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: .5px;
     margin-bottom: 6px;
 }
 
-/* Reuse .form-control from main.css — no duplication needed */
+/* Override form-control from main.css for dark card surface */
+.auth-card .form-control {
+    background: #0f1117;
+    border-color: #273044;
+    color: #e2e8f0;
+}
+.auth-card .form-control::placeholder { color: #374155; }
+.auth-card .form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+    background: #0f1117;
+}
 
 /* Password field with eye toggle */
 .pw-wrap {
@@ -287,7 +285,7 @@
 
 .strength-bar-track {
     height: 4px;
-    background: var(--gray-100);
+    background: #1e2535;
     border-radius: 2px;
     overflow: hidden;
 }
@@ -362,27 +360,27 @@
     gap: 10px;
     margin: 16px 0;
     font-size: 11.5px;
-    color: var(--gray-300);
+    color: #374155;
 }
 .auth-divider::before,
 .auth-divider::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--gray-200);
+    background: #273044;
 }
 
 /* ── Switch link ──────────────────────────────────────────── */
 .auth-switch-text {
     text-align: center;
     font-size: 12.5px;
-    color: var(--gray-400);
+    color: #64748b;
 }
 
 .auth-switch-link {
     background: none;
     border: none;
-    color: var(--blue-600);
+    color: #60a5fa;
     font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
@@ -391,14 +389,14 @@
     text-decoration: underline;
     text-underline-offset: 2px;
 }
-.auth-switch-link:hover { color: var(--blue-700); }
+.auth-switch-link:hover { color: #93c5fd; }
 
 /* ── Role note ────────────────────────────────────────────── */
 .auth-role-note {
     font-size: 11.5px;
-    color: var(--gray-400);
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
+    color: #64748b;
+    background: #0f1117;
+    border: 1px solid #273044;
     border-radius: var(--radius-sm);
     padding: 8px 12px;
     margin-bottom: 14px;
@@ -409,18 +407,18 @@
 .auth-footer {
     margin-top: 22px;
     padding-top: 16px;
-    border-top: 1px solid var(--gray-100);
+    border-top: 1px solid #1e2535;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 11px;
-    color: var(--gray-400);
+    color: #475569;
 }
 
 .auth-footer-dot {
     width: 5px; height: 5px;
     border-radius: 50%;
-    background: var(--safe-mid);
+    background: #10b981;
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle;
@@ -428,7 +426,7 @@
 
 .auth-footer-clock {
     font-size: 11px;
-    color: var(--gray-400);
+    color: #475569;
     font-variant-numeric: tabular-nums;
     letter-spacing: .3px;
 }

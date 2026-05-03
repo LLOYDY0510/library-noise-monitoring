@@ -1,5 +1,5 @@
 // ============================================================
-//  alerts.js
+// LQMS — alerts.js
 // Resolve confirm modal logic.
 // Depends on: app.js (openModal, closeModal)
 // ============================================================

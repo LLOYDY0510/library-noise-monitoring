@@ -14,15 +14,31 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // ── Base URL ──────────────────────────────────────────────────
-// Change to match your deployment path.
-// Local XAMPP example:  '/library-saba'
-// Shared hosting root:  '' (empty string)
-define('BASE_URL', '/');
+// Auto-detected from the server document root so the same
+// config works on localhost (any folder name) and on hosting.
+// Override manually if auto-detection is wrong for your setup:
+//   define('BASE_URL', '/my-folder');
+if (!defined('BASE_URL')) {
+    $scriptDir  = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
+    $docRoot    = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT'] ?? '');
+    $scriptName = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+    // Walk up from the current script to find the project root
+    // (one level up from includes/, api/, php/ subdirectories)
+    $subDirs = ['includes', 'api', 'php'];
+    $base = rtrim($scriptName, '/');
+    foreach ($subDirs as $sub) {
+        if (str_ends_with($base, '/' . $sub)) {
+            $base = substr($base, 0, -strlen('/' . $sub));
+            break;
+        }
+    }
+    define('BASE_URL', rtrim($base, '/'));
+}
 
 // ── Database ──────────────────────────────────────────────────
 define('DB_HOST',    'localhost');
 define('DB_NAME',    'saba');
-define('DB_USER',    'root');              // ← your actual username
+define('DB_USER',    'root');                    // ← your actual username (often 'root')
 define('DB_PASS',    '');            // ← your actual password
 define('DB_CHARSET', 'utf8mb4');
 
@@ -131,10 +147,15 @@ function parseBrowser(string $ua): string {
 // Logs every important system action to the activity_logs table.
 // Updated: now also writes to the `browser` column added in
 // the latest setup.sql revision.
+// page column stores the full request URI (e.g. /lqms_complete/zones.php)
+// so the activity log renders an actual URL, not just a page title.
 function logActivity(string $action, string $detail = '', string $page = ''): void {
     if (!isLoggedIn()) return;
     $u  = currentUser();
     $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    // Store full URI path so the activity log can render a real URL.
+    // Falls back to the passed $page label if REQUEST_URI is unavailable.
+    $pageUri = $_SERVER['REQUEST_URI'] ?? ($page ?: ('/' . basename($_SERVER['PHP_SELF'] ?? '')));
     try {
         getDB()->prepare(
             'INSERT INTO activity_logs
@@ -146,7 +167,7 @@ function logActivity(string $action, string $detail = '', string $page = ''): vo
             $u['role'],
             $action,
             $detail,
-            $page ?: basename($_SERVER['PHP_SELF'], '.php'),
+            $pageUri,
             $_SERVER['REMOTE_ADDR'] ?? '',
             parseBrowser($ua),
             substr($ua, 0, 255),

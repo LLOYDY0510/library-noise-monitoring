@@ -1,5 +1,5 @@
 // ============================================================
-// dashboard.js
+// LQMS — dashboard.js
 // Dashboard-specific logic: chart, countdown, zone map, activity log.
 // Depends on: app.js (BASE_URL, Toast, refreshZoneLevels)
 //             charts.js (renderNoiseChart)
@@ -10,13 +10,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ── Noise History Chart ───────────────────────────────────
-    if (CHART_DATA.length && CHART_DATA[0].length) {
-        const datasets = CHART_DATA.map((d, i) => ({
-            label: ZONE_NAMES[i] || `Zone ${i + 1}`,
-            data: d,
-        }));
-        setTimeout(() => renderNoiseChart('noiseChart', datasets, CHART_LBLS), 150);
-    }
+    // Renders even when CHART_DATA is empty (fresh install / no alerts yet).
+    // charts.js shows axes + threshold lines with a "No data yet" placeholder.
+    const datasets = (CHART_DATA || []).map((d, i) => ({
+        label: ZONE_NAMES[i] || `Zone ${i + 1}`,
+        data:  d || [],
+    }));
+    setTimeout(() => renderNoiseChart('noiseChart', datasets, CHART_LBLS || []), 200);
 
     // ── Simulation Countdown ──────────────────────────────────
     const nextReadEl = document.getElementById('nextRead');
@@ -174,6 +174,10 @@ function initZoneMap() {
     loadMapZones();
     setInterval(loadMapZones, 30_000);
 
+    // Leaflet renders blank if the container was hidden or zero-height
+    // at init time. invalidateSize() forces a redraw once visible.
+    setTimeout(() => map.invalidateSize(), 200);
+
     // Exposed for the Reset button
     window.resetZoneMap = () => map.setView(MAP_CENTER, MAP_ZOOM);
 }
@@ -253,8 +257,8 @@ function initActivityFeed() {
                 </div>
                 <div class="act-detail">${log.detail || ''}</div>
                 <div class="act-footer">
-                    ${log.page ? `<span>${log.page}</span>` : ''}
-                    ${log.ip   ? `<span>${log.ip}</span>`   : ''}
+                    ${log.page_url ? `<a class="act-page-url" href="${log.page_url}" target="_blank">${log.page_url}</a>` : ''}
+                    ${log.ip       ? `<span class="act-ip">${log.ip}</span>` : ''}
                     <span class="act-time">${timeAgo(log.created_at)}</span>
                 </div>
             </div>`;

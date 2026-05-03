@@ -355,19 +355,22 @@ $jsChartData = json_encode(array_values($chartData));
 $jsLabels    = json_encode($chartLabels);
 $jsZoneNames = json_encode(array_column($zones, 'name'));
 
-$extraScripts = <<<JS
-<script src="<?= BASE_URL ?>/js/charts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script>
-// ── Data from PHP ─────────────────────────────────────────────
-const CHART_DATA  = {$jsChartData};
-const CHART_LBLS  = {$jsLabels};
-const ZONE_NAMES  = {$jsZoneNames};
-const HAS_MAP     = {$jsHasMap};
-const HAS_ACT_LOG = {$jsHasActLog};
-</script>
-<script src="<?= BASE_URL ?>/js/dashboard.js"></script>
-JS;
+// NOTE: Leaflet must load BEFORE dashboard.js so L is available
+// when initZoneMap() runs. charts.js must load before the data
+// inline block so renderNoiseChart is defined. Order matters.
+$extraScripts =
+    '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>' .
+    '<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>' .
+    '<script src="' . BASE_URL . '/js/charts.js"></script>' .
+    '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>' .
+    '<script>' .
+    'const CHART_DATA  = ' . $jsChartData . ';' .
+    'const CHART_LBLS  = ' . $jsLabels    . ';' .
+    'const ZONE_NAMES  = ' . $jsZoneNames . ';' .
+    'const HAS_MAP     = ' . $jsHasMap    . ';' .
+    'const HAS_ACT_LOG = ' . $jsHasActLog . ';' .
+    '</script>' .
+    '<script src="' . BASE_URL . '/js/dashboard.js"></script>';
 
 include __DIR__ . '/includes/layout_footer.php';
 ?>

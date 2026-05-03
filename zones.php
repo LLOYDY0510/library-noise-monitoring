@@ -18,6 +18,8 @@ $pageSubtitle = 'Real-time noise level monitoring per zone';
 $user      = currentUser();
 $msg       = '';
 
+$extraStyles = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
     $zoneId = $_POST['zone_id'] ?? '';
@@ -117,7 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 $zones = $db->query('SELECT * FROM zones ORDER BY floor, name')->fetchAll();
 logActivity('Viewed Zones', 'Opened zone management page', 'zones');
 
-$extraScripts = '<script src="' . BASE_URL . '/js/zones.js"></script>';
+$extraScripts = '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>'
+              . '<script src="' . BASE_URL . '/js/zones.js"></script>';
 include __DIR__ . '/includes/layout.php';
 ?>
 
@@ -309,13 +312,19 @@ include __DIR__ . '/includes/layout.php';
                     <label class="form-label">Critical Threshold (dB)</label>
                     <input class="form-control" type="number" name="zone_crit" min="0" max="120" value="60">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Latitude (for map)</label>
-                    <input class="form-control" type="number" name="zone_lat" step="0.0000001" placeholder="e.g. 8.359248">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Longitude (for map)</label>
-                    <input class="form-control" type="number" name="zone_lng" step="0.0000001" placeholder="e.g. 124.867853">
+                <div class="form-group full">
+                    <label class="form-label">Map Location <span class="form-hint-inline">Click on the map to set coordinates</span></label>
+                    <div id="addZonePicker" class="map-picker"></div>
+                    <div class="map-picker-coords">
+                        <div class="map-coord-field">
+                            <span class="map-coord-label">LAT</span>
+                            <input class="form-control map-coord-input" type="number" name="zone_lat" id="addZoneLat" step="0.0000001" placeholder="Click map…" readonly>
+                        </div>
+                        <div class="map-coord-field">
+                            <span class="map-coord-label">LNG</span>
+                            <input class="form-control map-coord-input" type="number" name="zone_lng" id="addZoneLng" step="0.0000001" placeholder="Click map…" readonly>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group full">
                     <label class="form-label">Description</label>
@@ -364,13 +373,19 @@ include __DIR__ . '/includes/layout.php';
                 <div class="form-group">
                     <!-- intentional spacer to keep grid balanced -->
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Latitude</label>
-                    <input class="form-control" type="number" name="zone_lat" id="editZoneLat" step="0.0000001">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Longitude</label>
-                    <input class="form-control" type="number" name="zone_lng" id="editZoneLng" step="0.0000001">
+                <div class="form-group full">
+                    <label class="form-label">Map Location <span class="form-hint-inline">Click on the map to set coordinates</span></label>
+                        <div id="addZonePicker" class="map-picker"></div>
+                        <div class="map-picker-coords">
+                        <div class="map-coord-field">
+                            <span class="map-coord-label">LAT</span>
+                            <input class="form-control map-coord-input" type="number" name="zone_lat" id="addZoneLat" step="0.0000001" placeholder="Click map…" readonly>
+                        </div>
+                        <div class="map-coord-field">
+                            <span class="map-coord-label">LNG</span>
+                            <input class="form-control map-coord-input" type="number" name="zone_lng" id="addZoneLng" step="0.0000001" placeholder="Click map…" readonly>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group full">
                     <label class="form-label">Description</label>

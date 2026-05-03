@@ -1,5 +1,5 @@
 /* ============================================================
-   components.css
+   LQMS — components.css
    Reusable component & page-specific styles.
    All shared classes live here; layout primitives are in main.css.
    ============================================================ */
@@ -84,8 +84,8 @@
 }
 
 .zone-card {
-    background: #fff;
-    border: 1.5px solid var(--gray-200);
+    background: #161b27;
+    border: 1.5px solid #273044;
     border-radius: var(--radius-lg);
     padding: 18px 20px;
     box-shadow: var(--shadow-sm);
@@ -96,10 +96,9 @@
 
 .zone-card:hover { box-shadow: var(--shadow); }
 
-.zone-card.zone-safe     { border-color: rgba(5,150,105,.35); }
-.zone-card.zone-warning  { border-color: rgba(217,119,6,.35); }
-.zone-card.zone-critical { border-color: rgba(220,38,38,.45); }
-
+.zone-card.zone-safe     { border-color: rgba(16,185,129,.35); }
+.zone-card.zone-warning  { border-color: rgba(245,158,11,.35); }
+.zone-card.zone-critical { border-color: rgba(239,68,68,.45); }
 /* Legacy shorthand names */
 .zone-card.zone-warn { border-color: rgba(217,119,6,.35); }
 .zone-card.zone-crit { border-color: rgba(220,38,38,.45); }
@@ -191,7 +190,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     padding-top: 12px;
-    border-top: 1px solid var(--gray-100);
+    border-top: 1px solid #1e2535;
     margin-top: 2px;
 }
 
@@ -251,7 +250,8 @@
 /* ── Chart Wrapper ────────────────────────────────────────── */
 .chart-container {
     width: 100%;
-    height: 220px;
+    height: 240px;
+    max-height: 240px;
     position: relative;
 }
 
@@ -636,12 +636,30 @@
 .page-chip {
     display: inline-block;
     font-size: 11px;
-    background: var(--gray-50);
+    background: var(--gray-100);
     border: 1px solid var(--gray-200);
     padding: 2px 8px;
     border-radius: 5px;
     color: var(--gray-500);
     font-family: monospace;
+}
+
+/* Clickable variant — renders when page stores a full URI */
+.page-chip-link {
+    color: var(--blue-600);
+    text-decoration: none;
+    background: var(--blue-50);
+    border-color: var(--blue-200);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.page-chip-link:hover {
+    background: var(--blue-100);
+    text-decoration: underline;
 }
 
 /* ── Pagination ──────────────────────────────────────────── */
@@ -929,3 +947,108 @@
 .map-chip-dot-safe { background: var(--safe); }
 .map-chip-dot-warn { background: var(--warn); }
 .map-chip-dot-crit { background: var(--crit); }
+
+/* ── Page URL chip (activity log page column) ─────────────── */
+/* Replaces .page-chip — now shows full clickable URL path */
+.page-url-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-family: monospace;
+    color: var(--blue-600);
+    background: var(--blue-50);
+    border: 1px solid var(--blue-200);
+    border-radius: var(--radius-sm);
+    padding: 2px 8px;
+    text-decoration: none;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    transition: background .12s, color .12s;
+}
+.page-url-chip:hover {
+    background: var(--blue-100);
+    color: var(--blue-700);
+}
+.page-url-chip.page-url-empty {
+    color: var(--gray-300);
+    background: var(--gray-50);
+    border-color: var(--gray-200);
+    pointer-events: none;
+}
+
+/* ── Activity feed page URL link ──────────────────────────── */
+.act-page-url {
+    font-size: 10.5px;
+    font-family: monospace;
+    color: var(--blue-500);
+    text-decoration: none;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+.act-page-url:hover { color: var(--blue-700); text-decoration: underline; }
+
+.act-ip {
+    font-size: 10.5px;
+    color: var(--gray-400);
+    font-family: monospace;
+}
+
+/* ── Map coordinate picker ───────────────────────────────── */
+.map-picker {
+    width: 100%;
+    height: 220px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #273044;
+    overflow: hidden;
+    margin-bottom: 10px;
+    z-index: 0;
+}
+
+.map-picker-coords {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.map-coord-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #0f1117;
+    border: 1px solid #273044;
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+}
+
+.map-coord-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .6px;
+    color: #475569;
+    white-space: nowrap;
+}
+
+.map-coord-input {
+    border: none !important;
+    background: transparent !important;
+    padding: 4px 0 !important;
+    font-size: 12px !important;
+    color: #60a5fa !important;
+    font-family: monospace;
+    box-shadow: none !important;
+    min-width: 0;
+}
+
+.form-hint-inline {
+    font-size: 10.5px;
+    color: #475569;
+    font-weight: 400;
+    margin-left: 6px;
+}

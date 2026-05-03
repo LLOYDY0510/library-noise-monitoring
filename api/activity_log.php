@@ -2,6 +2,7 @@
 // ============================================================
 // api/activity_log.php — Recent activity JSON feed
 // Used by the Admin dashboard live widget
+// UPDATED: page field now returns full URL path
 // ============================================================
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
@@ -10,8 +11,26 @@ requireRole('Administrator');
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
-$limit  = max(1, min(100, (int)($_GET['limit'] ?? 20)));
-$since  = $_GET['since'] ?? null; // ISO timestamp — only return newer entries
+$limit = max(1, min(100, (int)($_GET['limit'] ?? 20)));
+$since = $_GET['since'] ?? null;
+
+// Map bare page names → full URL paths for display
+function pageToUrl(string $page): string {
+    $base = BASE_URL;
+    $map  = [
+        'dashboard'     => $base . '/dashboard.php',
+        'zones'         => $base . '/zones.php',
+        'alerts'        => $base . '/alerts.php',
+        'reports'       => $base . '/reports.php',
+        'users'         => $base . '/users.php',
+        'activity_log'  => $base . '/activity_log.php',
+        'index'         => $base . '/index.php',
+        'logout'        => $base . '/php/logout.php',
+        'simulate_noise'=> $base . '/php/simulate_noise.php',
+        'trigger_sim'   => $base . '/api/trigger_sim.php',
+    ];
+    return $map[$page] ?? ($page ? $base . '/' . $page . '.php' : '—');
+}
 
 try {
     $db = getDB();
@@ -37,7 +56,12 @@ try {
 
     $logs = $stmt->fetchAll();
 
-    // Count by action type for mini stats
+    // Enrich each log with full page URL
+    foreach ($logs as &$log) {
+        $log['page_url'] = pageToUrl($log['page'] ?? '');
+    }
+    unset($log);
+
     $stats = $db->query(
         'SELECT
             COUNT(*) AS total,
