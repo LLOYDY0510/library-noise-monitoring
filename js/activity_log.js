@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — activity_log.js
+// activity_log.js
 // Initialises DataTables on the activity log table.
 // jQuery and DataTables are loaded by activity_log.php.
 // ============================================================

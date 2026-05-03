@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — dashboard.js
+//  dashboard.js
 // Dashboard-specific logic: chart, countdown, zone map, activity log.
 // Depends on: app.js (BASE_URL, Toast, refreshZoneLevels)
 //             charts.js (renderNoiseChart)

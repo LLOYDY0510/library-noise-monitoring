@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — charts.js
+//  charts.js
 // Chart.js 4.4.1 + chartjs-plugin-annotation
 // FIX: explicitly register the annotation plugin after CDN load
 // ============================================================

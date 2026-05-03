@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// LQMS — includes/config.php
+// includes/config.php
 //
 // CHANGES FROM PREVIOUS VERSION:
 //   1. logActivity() now parses + writes the browser column

@@ -232,12 +232,6 @@ START TRANSACTION;
 
 -- ── Users ─────────────────────────────────────────────────────
 -- Passwords are bcrypt hashes (cost=10, PASSWORD_BCRYPT).
--- Plain-text originals for reference only — remove this comment
--- before deploying to production.
---   U-001  admin123
---   U-002  james123
---   U-003  staff123
---
 -- To generate a new hash:
 --   php -r "echo password_hash('YourPassword', PASSWORD_BCRYPT);"
 --

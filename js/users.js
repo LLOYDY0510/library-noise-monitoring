@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — users.js
+//  users.js
 // Modal population helpers for edit role, reset password,
 // and delete user confirm.
 // Depends on: app.js (openModal, closeModal)

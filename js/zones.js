@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — zones.js
+//  zones.js
 // Zones page: modal population helpers, delete confirmation,
 // progress bar animation on load.
 // Depends on: app.js (openModal, closeModal)

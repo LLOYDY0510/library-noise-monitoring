@@ -138,12 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         </div>
     </div>
 
-    <div class="auth-status-strip">
-        <span class="pulse-dot"></span>
-        System online &nbsp;·&nbsp; All sensors active
-        <span class="auth-strip-right">v<?= APP_VERSION ?> &nbsp;·&nbsp; <span class="auth-clock"></span></span>
-    </div>
-
     <div class="auth-tabs">
         <button class="auth-tab-btn <?= $activeTab === 'login'    ? 'active' : '' ?>" id="authTab_login"    onclick="switchTab('login')">Sign In</button>
         <button class="auth-tab-btn <?= $activeTab === 'register' ? 'active' : '' ?>" id="authTab_register" onclick="switchTab('register')">Create Account</button>
@@ -153,11 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     <div class="auth-panel <?= $activeTab === 'login' ? 'active' : '' ?>" id="authPanel_login">
         <div class="auth-panel-title">Welcome back</div>
         <div class="auth-panel-sub">Sign in to monitor and manage library noise levels.</div>
-
-        <div class="auth-secure-badge">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Passwords are encrypted with bcrypt
-        </div>
 
         <?php if ($loginError): ?>
         <div class="auth-alert error">
@@ -270,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             </div>
 
             <div class="auth-role-note">
-                ℹ️ New accounts are assigned <strong>Library Staff</strong> role.
+                New accounts are assigned <strong>Library Staff</strong> role.
                 An administrator can upgrade your role at any time.
             </div>
 

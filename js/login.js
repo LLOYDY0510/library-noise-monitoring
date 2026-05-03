@@ -1,5 +1,5 @@
 // ============================================================
-// LQMS — login.js
+// login.js
 // Auth page behaviour: clock, tab switching, password eye
 // toggle, password strength meter, form loading states.
 // ============================================================
